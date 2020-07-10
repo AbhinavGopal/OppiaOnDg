@@ -12,9 +12,9 @@ class Action {
       this.canvas = window.interactiveCanvas;
       this.scene = scene;
       this.commands = {
-        POST_MESSAGE: (data) => {
-            console.log('in the postmessage callback')
-            this.scene.postMessage(data.message);
+        CONTINUE: (data) => {
+            console.log('in the continue callback')
+            this.scene.continue();
         },
       };
     }

@@ -17,15 +17,22 @@ class Scene {
         this.action.setCallbacks()
         return this
     }
-    postMessage(message) {
+    temporary() {
+        pass
+    }
+    continue() {
         //need to post some message to the oppia iframe.\
-        // console.log('posting message')
-        // iframe.postMessage(message, '*');
-        // console.log(message)
-        button.trigger("click")
+        console.log('posting message')
+        console.log('incoming try-catch')
+        try{
+            console.log('attempting here')
+            iframe.postMessage("CONTINUE", '*');
+        } catch (e) {
+            console.log('failed', e)
+        }
+        console.log("POSTED THE CONTINUE MESSAGE IN OPPIA")
     }
 }
-console.log('did something')
 scene = new Scene();
 
 

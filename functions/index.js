@@ -35,12 +35,12 @@ app.handle('LEARN_LESSON', (conv) => {
   );
 });
 
-app.handle('SEND_MESSAGE', (conv) => {
-  conv.add('sending a message from assistant to oppia through iframe posting.')
+app.handle('CONTINUE', (conv) => {
+  conv.add('continuing by sending a message from assistant to oppia through iframe posting.')
   conv.add(new Canvas({
     data: {
-      command: 'POST_MESSAGE',
-      message: 'HELLO, OPPIA' // Answer from user "A"  - ClickAnswerA()
+      command: 'CONTINUE',
+      details: '' // Answer from user "A"  - ClickAnswerA()
     },
   }))
 })
