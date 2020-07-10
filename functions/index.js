@@ -27,13 +27,23 @@ const {HtmlResponse} = require('actions-on-google');
 const app = conversation({debug: true});
 var page = 1
 
-app.handle('LEARN_LESSON', (conv, topic) => {
+app.handle('LEARN_LESSON', (conv) => {
   conv.add("Here's the lesson!");
   conv.add(new Canvas({
     url: `https://oppiaassistant.web.app`,
     })
   );
 });
+
+app.handle('SEND_MESSAGE', (conv) => {
+  conv.add('sending a message from assistant to oppia through iframe posting.')
+  conv.add(new Canvas({
+    data: {
+      command: 'POST_MESSAGE',
+      message: 'HELLO, OPPIA' // Answer from user "A"  - ClickAnswerA()
+    },
+  }))
+})
 
 
 
