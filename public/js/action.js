@@ -16,6 +16,10 @@ class Action {
             console.log('in the continue callback')
             this.scene.continue();
         },
+        ENTER_TEXT_NUMBER_UNITS: (data) => {
+          console.log('entering into text box')
+          this.scene.enterInBox(data.details)
+        }
       };
     }
     /**

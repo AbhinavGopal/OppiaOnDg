@@ -45,6 +45,14 @@ app.handle('CONTINUE', (conv) => {
   }))
 })
 
-
+app.handle('INPUT_TEXT', (conv) => {
+  conv.add('Inputting your answer')
+  conv.add(new Canvas({
+    data: {
+      command: 'ENTER_TEXT_NUMBER_UNITS',
+      details: '1,-6,-1,30',
+    }
+  }))
+})
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);

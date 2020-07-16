@@ -17,21 +17,28 @@ class Scene {
         this.action.setCallbacks()
         return this
     }
-    temporary() {
-        pass
-    }
     continue() {
         //need to post some message to the oppia iframe.\
-        console.log('posting message')
-        console.log('incoming try-catch')
+        console.log('posting message...')
+        iframe = document.getElementById('oppia-iframe').contentWindow
         try{
-            console.log('attempting here')
             iframe.postMessage("CONTINUE", '*');
+            console.log('successful')
         } catch (e) {
             console.log('failed', e)
         }
-        console.log("POSTED THE CONTINUE MESSAGE IN OPPIA")
     }
+    enterInBox(message) {
+        console.log('posting message...')
+        iframe = document.getElementById('oppia-iframe').contentWindow
+        try{
+            iframe.postMessage("ENTER_TEXT_NUMBER_UNITS " + messageZ, '*');
+            console.log('successful')
+        } catch (e) {
+            console.log('failed', e)
+        }
+    }
+
 }
 scene = new Scene();
 
