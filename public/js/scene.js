@@ -1,18 +1,12 @@
 const view = document.getElementById('view');
-var iframe = document.getElementById('oppia-iframe')
-document.onload = function() {
-    button = document.getElementByTagName('oppia-iframe').contentWindow.getElementByTagName('oppia-learner-confirm-button protractor-test-continue-button md-button md-ink-ripple')
-}
-
-interactiveCanvas.getHeaderHeightPx().then((headerHeight) => {
+window.onload = function() {
+    interactiveCanvas.getHeaderHeightPx().then((headerHeight) => {
     document.body.style.paddingTop = `${headerHeight}px`;
 });
-
-  
+} 
 
 class Scene {
     constructor() {
-        console.log('here in scene constructor')
         this.action = new Action(this)
         this.action.setCallbacks()
         return this
