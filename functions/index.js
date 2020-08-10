@@ -22,35 +22,103 @@ const {
   Simple
 } = require('@assistant/conversation');
 const functions = require('firebase-functions');
-const {HtmlResponse} = require('actions-on-google');
+const {HtmlResponse, Carousel, Image} = require('actions-on-google');
 
 const app = conversation({debug: true});
-var page = 1
 
 app.handle('LEARN_LESSON', (conv) => {
+  // check versus the oppia state
+  // if check fails, go to different intent
   conv.add("Here's the lesson!");
-  conv.add(new Canvas({
-    url: `https://oppiaassistant.web.app`,
-    })
-  );
-});
+  if (conv.intent.params.topic.resolved === 'fractions' || conv.intent.params.topic.resolved === 'project demo') {
+    conv.add(new Canvas({
+      url: `https://oppiaassistant.web.app`,
+      data: {
+        command: 'HOSTNAME', // sends a message to oppia
+        details: 'https://oppiaassistant.web.app'
+      }
+      })
+    );
+  }
+})
+
 
 app.handle('CONTINUE', (conv) => {
-  conv.add('continuing by sending a message from assistant to oppia through iframe posting.')
+  conv.add('continuing to next page')
   conv.add(new Canvas({
     data: {
       command: 'CONTINUE',
-      details: '' // Answer from user "A"  - ClickAnswerA()
+      details: ''
     },
   }))
 })
 
 app.handle('INPUT_TEXT', (conv) => {
-  conv.add('Inputting your answer')
+  conv.add('Answering the question with your text')
   conv.add(new Canvas({
     data: {
+      // command: 'ANSWER_QN',
       command: 'ENTER_TEXT_NUMBER_UNITS',
-      details: '1,-6,-1,30',
+      details: 'Abhinav Gopal',
+    }
+  }))
+})
+
+app.handle('SUBMIT', (conv) => {
+  conv.add('Submitting your answer')
+  conv.add(new Canvas({
+    data: {
+      command: 'SUBMIT',
+      details: '',
+    }
+  }))
+})
+
+app.handle('MULTIPLE_CHOICE', (conv) => {
+  conv.add('Submitting your multiple choice response: Option-' + conv.intent.params.number.resolved)
+  conv.add(new Canvas({
+    data: {
+      // command: 'ANSWER_QN',
+      command: 'SELECT_ITEMS',
+      details: conv.intent.params.number.resolved,
+    }
+  }));
+})
+
+app.handle('INPUT_FRACTION', (conv) => {
+  conv.add('answering the question with your fraction')
+  if (conv.intent.params.fraction.resolved.includes('+')) {
+    conv.intent.params.fraction.resolved = conv.intent.params.fraction.resolved.replace('+', ' ')
+  }
+  conv.add(new Canvas({
+    data: {
+      // command: 'ANSWER_QN',
+      command: 'ENTER_FRACTION',
+      details: conv.intent.params.fraction.resolved
+    }
+  }))
+})
+
+app.handle('ADD_SET', (conv) => {
+  conv.add('answering the question by adding the element')
+  conv.add(new Canvas({
+    data: {
+      // command: 'ANSWER_QN',
+      command: 'ADD',
+      details: conv.intent.params.object.resolved,
+      operation_type: 'ADD'
+    }
+  }))
+})
+
+app.handle('REMOVE_SET', (conv) => {
+  conv.add('removing the element from the list')
+  conv.add(new Canvas({
+    data: {
+      // command: 'ANSWER_QN',
+      command: 'REMOVE',
+      details: conv.intent.params.object.resolved,
+      operation_type: 'REMOVE'
     }
   }))
 })
