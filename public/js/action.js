@@ -8,15 +8,6 @@ class Action {
     /**
      * @param {*} scene which serves as a container of all visual elements
      */
-    // stateToFunctionMap = {
-    //   'CONTINUE': this.scene.continue,
-    //   'ENTER_TEXT_NUMBER_UNITS' : this.scene.enterInBox,
-    //   'SUBMIT' : this.scene.submitAnswer,
-    //   'SELECT_ITEM' : this.scene.selectItems,
-    //   'ADD_SET' : this.scene.addSet,
-    //   'REMOVE_SET' : this.scene.removeSet,
-    //   'ENTER_FRACTION' : this.scene.enterFraction
-    // }
     constructor(scene) {
       this.canvas = window.interactiveCanvas;
       this.scene = scene;
@@ -46,6 +37,9 @@ class Action {
               } else {
                 this.scene.removeSet(data.details)
               }
+              break;
+            case '':
+              break;
           } 
         },
         ENTER_TEXT_NUMBER_UNITS: (data) => {

@@ -8,61 +8,41 @@ window.onload = function() {
 
 class Scene {
     constructor() {
-        this.action = new Action(this)
-        this.action.setCallbacks()
-        this.currentState = ''
-        return this
+        this.action = new Action(this);
+        this.action.setCallbacks();
+        this.currentState = '';
+        return this;
     }
 
     sendHostname(name) {
-        var iframe = document.getElementById('oppia-iframe').contentWindow
-        try{
-            var message = "HOST_NAME " + name
-            iframe.postMessage(message, '*');
-        } catch {
-            console.log('failed')
-        }
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
+        var message = "HOST_NAME " + name;
+        iframe.postMessage(message, '*');
     }
 
     answerQuestion(message) {
         var completeMessage = currentState + " " + message;
-        var iframe = document.getElementById('oppia-iframe').contentWindow
-        try {
-            iframe.postMessage(completeMessage, "*")
-        } catch {
-            console.log('failed')
-        }
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
+        iframe.postMessage(completeMessage, "*");
     }
 
 
     enterInBox(message) {
-        var iframe = document.getElementById('oppia-iframe').contentWindow
-        try{
-            var message = "ENTER_TEXT_NUMBER_UNITS " + message
-            iframe.postMessage(message, '*');
-        } catch {
-            console.log('failed')
-        }
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
+        var message = "ENTER_TEXT_NUMBER_UNITS " + message;
+        iframe.postMessage(message, '*');
     }
 
     continue() {
         //need to post some message to the oppia iframe.
-        var iframe = document.getElementById('oppia-iframe')
-        try{
-            iframe.contentWindow.postMessage("CONTINUE", '*');
-        } catch (e) {
-            console.log('failed', e)
-        }
+        var iframe = document.getElementById('oppia-iframe');
+        iframe.contentWindow.postMessage("CONTINUE", '*');
     }
 
     submitAnswer() {
         //need to post some message to the oppia iframe.
-        var iframe = document.getElementById('oppia-iframe')
-        try{
-            iframe.contentWindow.postMessage("SUBMIT", '*');
-        } catch (e) {
-            console.log('failed', e)
-        }
+        var iframe = document.getElementById('oppia-iframe');
+        iframe.contentWindow.postMessage("SUBMIT", '*');
     }
 
     selectItems(numbers) {
@@ -78,34 +58,22 @@ class Scene {
     }
 
     enterFraction(fraction) {
-        var iframe = document.getElementById('oppia-iframe').contentWindow
-        try{
-            var message = "ENTER_FRACTION " + fraction
-            iframe.postMessage(message, '*');
-        } catch {
-            console.log('failed')
-        }
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
+        var message = "ENTER_FRACTION " + fraction;
+        iframe.postMessage(message, '*');
     }
 
     addSet(items) {
-        var iframe = document.getElementById('oppia-iframe').contentWindow
-        try {
-            var message = "ADD_SET " + items
-            iframe.postMessage(message, '*');
-        } catch {
-            console.log('failed')
-        }
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
+        var message = "ADD_SET " + items;
+        iframe.postMessage(message, '*');
     }
 
     removeSet(items) {
-        var iframe = document.getElementById('oppia-iframe').contentWindow
+        var iframe = document.getElementById('oppia-iframe').contentWindow;
         for (const item of items) {
-            try{
-                var message = "REMOVE_SET " + item
-                iframe.postMessage(message, '*');
-            } catch {
-                console.log('failed')
-            }
+            var message = "REMOVE_SET " + item;
+            iframe.postMessage(message, '*');
         }
     }
 
@@ -113,20 +81,16 @@ class Scene {
 scene = new Scene();
 
 window.addEventListener('message', (event) => {
-    console.log(event.data)
     if(typeof(event.data) != 'string') {
-        return
+        return;
     } else if (event.data === 'Ready to receive hostname') {
-        console.log('sending hostname')
         var iframe = document.getElementById('oppia-iframe').contentWindow;
-        try{
-            var message = 'HOSTNAME https://oppiaassistant.web.app'
-            iframe.postMessage(message, '*');
-        } catch {
-            console.log('failed')
-        }
+        var message = 'HOSTNAME https://oppiaassistant.web.app';
+        iframe.postMessage(message, '*');
     } else {
-        scene.currentState = event.data
+        scene.currentState = event.data;
+        var textQuery = 'TRIGGER: ' + scene.currentState + ' CHANGE';
+        interactiveCanvas.sendTextQuery(textQuery);
     }
 })
 
