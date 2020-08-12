@@ -59,7 +59,7 @@ app.handle('CONTINUE', (conv) => {
   }));
 });
 
-app.handle('INPUT_TEXT', (conv) => {
+app.handle('ENTER_TEXT', (conv) => {
   conv.add('Answering the question with your text');
   conv.add(new Canvas({
     data: {
@@ -83,14 +83,13 @@ app.handle('MULTIPLE_CHOICE', (conv) => {
   conv.add('Submitting your multiple choice response: Option-' + conv.intent.params.number.resolved);
   conv.add(new Canvas({
     data: {
-      // command: 'ANSWER_QN',
       command: 'SELECT_ITEMS',
       details: conv.intent.params.number.resolved,
     }
   }));
 });
 
-app.handle('INPUT_FRACTION', (conv) => {
+app.handle('ENTER_FRACTION', (conv) => {
   conv.add('answering the question with your fraction');
   if (conv.intent.params.fraction.resolved.includes('+')) {
     conv.intent.params.fraction.resolved =
@@ -104,7 +103,7 @@ app.handle('INPUT_FRACTION', (conv) => {
   }));
 });
 
-app.handle('ADD_SET', (conv) => {
+app.handle('ADD_TO_SET', (conv) => {
   conv.add('answering the question by adding the element');
   conv.add(new Canvas({
     data: {
@@ -115,7 +114,7 @@ app.handle('ADD_SET', (conv) => {
   }));
 });
 
-app.handle('REMOVE_SET', (conv) => {
+app.handle('REMOVE_FROM_SET', (conv) => {
   conv.add('removing the element from the list');
   conv.add(new Canvas({
     data: {

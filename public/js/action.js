@@ -12,50 +12,20 @@ class Action {
       this.canvas = window.interactiveCanvas;
       this.scene = scene;
       this.commands = {
-        ANSWER_QN: (data) => {
-          switch (this.scene.currentState) {
-            case 'ENTER_TEXT_NUMBER_UNITS':
-              this.scene.enterInBox(data.details)
-              break;
-            case 'SELECT_ITEMS':
-              console.log('this is me\n')
-              this.scene.selectItems(data.details)
-              break
-            case 'ENTER FRACTION':
-              this.scene.enterFraction(data.details)
-              break;
-            case 'SELECT_ITEM_BULLET':
-              console.log('here\n')
-              this.scene.selectItems(data.details)
-              break;
-            case 'SELECT_ITEM_CHECKPOINT':
-              this.scene.selectItems(data.details)
-              break;
-            case 'SET_OPERATION':
-              if (data.operation_type === 'ADD') {
-                this.scene.addSet(data.details)
-              } else {
-                this.scene.removeSet(data.details)
-              }
-              break;
-            case '':
-              break;
-          } 
-        },
         ENTER_TEXT_NUMBER_UNITS: (data) => {
           this.scene.enterInBox(data.details)
         },
-        SELECT_ITEM: (data) => {
+        SELECT_ITEMS: (data) => {
           this.scene.selectItems(data.details)
         },
         ENTER_FRACTION: (data) => {
           this.scene.enterFraction(data.details)
         },
         ADD: (data) => {
-          this.scene.addSet(data.details)
+          this.scene.addToSet(data.details)
         },
         REMOVE: (data) => {
-          this.scene.removeSet(data.details)
+          this.scene.removeFromSet(data.details)
         },
         CONTINUE: (data) => {
           this.scene.continue();
@@ -66,7 +36,7 @@ class Action {
         HOSTNAME: (data) => {
           console.log('actions area')
           this.scene.sendHostname(data.details)
-        }
+        },
       };
     }
     /**

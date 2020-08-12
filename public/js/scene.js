@@ -46,13 +46,16 @@ class Scene {
     }
 
     selectItems(numbers) {
+        var iframe = document.getElementById('oppia-iframe');
         if (this.currentState == 'SELECT_ITEM_BULLET') {
             var message = "SELECT_ITEM_BULLET " + numbers;
-            iframe.postMessage(message, '*');
+            iframe.contentWindow.postMessage(message, '*');
         } else {
+            console.log('trying stuff inside here')
             for (var number of numbers) {
-                var message = "SELECT_ITEM_CHECKBOX" + number;
-                iframe.postMessage(message, '*');
+                var message = "SELECT_ITEM_CHECKBOX " + number;
+                console.log(message);
+                iframe.contentWindow.postMessage(message, '*');
             }
         }
     }
@@ -63,13 +66,13 @@ class Scene {
         iframe.postMessage(message, '*');
     }
 
-    addSet(items) {
+    addToSet(items) {
         var iframe = document.getElementById('oppia-iframe').contentWindow;
         var message = "ADD_SET " + items;
         iframe.postMessage(message, '*');
     }
 
-    removeSet(items) {
+    removeFromSet(items) {
         var iframe = document.getElementById('oppia-iframe').contentWindow;
         for (const item of items) {
             var message = "REMOVE_SET " + item;
