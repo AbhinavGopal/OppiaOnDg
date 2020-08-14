@@ -64,7 +64,7 @@ app.handle('ENTER_TEXT', (conv) => {
   conv.add(new Canvas({
     data: {
       command: 'ENTER_TEXT_NUMBER_UNITS',
-      details: 'Abhinav Gopal',
+      details: conv.intent.params.object.resolved,
     }
   }));
 });

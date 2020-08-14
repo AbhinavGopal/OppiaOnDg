@@ -34,7 +34,6 @@ class Action {
           this.scene.submitAnswer();
         },
         HOSTNAME: (data) => {
-          console.log('actions area')
           this.scene.sendHostname(data.details)
         },
       };

@@ -51,10 +51,8 @@ class Scene {
             var message = "SELECT_ITEM_BULLET " + numbers;
             iframe.contentWindow.postMessage(message, '*');
         } else {
-            console.log('trying stuff inside here')
             for (var number of numbers) {
                 var message = "SELECT_ITEM_CHECKBOX " + number;
-                console.log(message);
                 iframe.contentWindow.postMessage(message, '*');
             }
         }
